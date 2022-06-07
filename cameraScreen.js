@@ -1,4 +1,3 @@
-const fs = require('fs');
 const scripts = document.getElementsByTagName("script")
 const video = document.getElementById('video')
 const registerBtn = document.getElementById("registerBtn")
@@ -38,14 +37,6 @@ function startVideo(){
 
 
 const folderName = '/Users/joe/test';
-
-try {
-  if (!fs.existsSync(folderName)) {
-    fs.mkdirSync(folderName);
-  }
-} catch (err) {
-  console.error(err);
-}
 
 function capture(video, scaleFactor) {
     if (scaleFactor == null) {
