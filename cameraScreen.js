@@ -134,7 +134,7 @@ video.addEventListener('play', async () => {
 
     }else if(methodType == "login"){
         const labelsWithImage = await loadMyPhoto()
-        const faceMatcher = new faceapi.FaceMatcher(labelsWithImage, .7)
+        const faceMatcher = new faceapi.FaceMatcher(labelsWithImage, .9999)
         var interval = setInterval(async () => {
             const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
             const resizedDetections = faceapi.resizeResults(detections, displaySize)
@@ -158,29 +158,43 @@ video.addEventListener('play', async () => {
                 // output.appendChild(snapshots[0]);
                 var data = dataURItoBlob(snapshots[0].toDataURL('image/jpeg'));
 
-                found = true
+                // found = true
 
 
-                setTimeout(function(){
-                    clearInterval(interval)
-                    console.log( document.getElementById('output'))
-                    document.getElementById('output').remove()
-                    video.remove()
-                    canvas.remove()
-                }, 4000)
+                // setTimeout(function(){
+                //     clearInterval(interval)
+                //     console.log( document.getElementById('output'))
+                //     document.getElementById('output').remove()
+                //     video.remove()
+                //     canvas.remove()
+                // }, 4000)
 
                 
                 let currentImg = await faceapi.bufferToImage(data, new faceapi.SsdMobilenetv1Options())
                 const detection =  await faceapi.detectSingleFace(currentImg).withFaceLandmarks().withFaceDescriptor()
                 const results = faceMatcher.findBestMatch(detection.descriptor)
+                console.log(results)
 
-                if(results.length != "undefined"){
-                    alert("hello Talal Badreddine")
-                }else{
-                    alert("You are not Talal")
-                }
+                let resultDesc = results['_label']
                 
-                return
+                // console.log(resultDesc)
+                if(resultDesc == "unknown"){
+
+                    alert("I don't know you")
+
+                }else{
+
+                    alert(`welcome ${resultDesc}`)
+
+                }
+
+                // if(results[0] > 0){
+                //     alert("hello Talal Badreddine")
+                // }else{
+                //     alert("You are not Talal")
+                // }
+                
+                // return
 
 
  
